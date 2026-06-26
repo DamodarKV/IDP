@@ -40,10 +40,15 @@ def sanitize_value(val):
 async def read_root(request: Request):
     menu_structure = get_navigation_structure()
     return templates.TemplateResponse(
-        "base.html",
-        {"request": request, "menu": menu_structure, "current_page": "Home", "view_type": "home"}
+        request=request,
+        name="base.html",
+        context={
+            "request": request,
+            "menu": menu_structure,
+            "current_page": "Home",
+            "view_type": "home"
+        }
     )
-
 
 @app.get("/{category}", response_class=HTMLResponse)
 async def read_category(request: Request, category: str, card: str = None):
@@ -101,8 +106,9 @@ async def read_category(request: Request, category: str, card: str = None):
                     ["Error processing record", str(e), "Not Available", "Not Available", "Not Available", "#"]]
 
     return templates.TemplateResponse(
-        "base.html",
-        {
+        request=request,
+        name="base.html",
+        context={
             "request": request,
             "menu": menu_structure,
             "current_page": display_name,
@@ -114,7 +120,6 @@ async def read_category(request: Request, category: str, card: str = None):
             "excel_rows": cleaned_rows
         }
     )
-
 
 @app.get("/{category}/{subfolder}/{invoice_id}", response_class=HTMLResponse)
 async def view_invoice_details(request: Request, category: str, subfolder: str, invoice_id: str):
@@ -192,15 +197,16 @@ async def view_invoice_details(request: Request, category: str, subfolder: str, 
         right_summary = f"Error processing file tracking elements: {str(e)}"
 
     return templates.TemplateResponse(
-        "base.html",
-        {
+        request=request,
+        name="base.html",
+        context={
             "request": request,
             "menu": menu_structure,
             "current_page": f"Record Profile: {invoice_id}",
             "view_type": "invoice_view",
             "left_metadata": left_metadata,
             "right_summary": right_summary,
-            "pdf_url": pdf_static_route,  # Serve the local path string
+            "pdf_url": pdf_static_route,
             "back_url": f"/{category}?card={subfolder}"
         }
     )
