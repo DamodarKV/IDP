@@ -11,7 +11,7 @@ app = FastAPI()
 app.mount("/static_db", StaticFiles(directory="database"), name="static_db")
 
 templates = Jinja2Templates(directory="templates")
-BASE_DIR = "../database"
+BASE_DIR = "database"
 
 
 def get_navigation_structure():
@@ -99,7 +99,7 @@ async def read_category(request: Request, category: str, card: str = None):
             except Exception as e:
                 cleaned_rows = [
                     ["Error processing record", str(e), "Not Available", "Not Available", "Not Available", "#"]]
-    print('HI')
+
     return templates.TemplateResponse(
         "base.html",
         {

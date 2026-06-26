@@ -1,5 +1,7 @@
-pandas
 fastapi
 uvicorn
-openpyxl
 jinja2
+pandas
+openpyxl
+python-multipart
+aiofiles
