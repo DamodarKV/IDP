@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- Locate the back button block at the top of templates/profile.html and update it like this: -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="/{{ category_folder }}?card={{ selected_card }}" class="btn-back" style="text-decoration: none; color: #475569; font-size: 14px;">← Back to Workspace Ledger</a>
+        <a href="{{ request.url.path }}/edit" class="btn-view" style="text-decoration: none; margin-bottom: 15px;">✎ Edit Record</a>
+    </div>
+
+
+
+    <div class="split-screen-workbench">
+        <div class="left-properties-sidebar">
+            {% for key, val in left_metadata.items() %}
+                <div class="property-tile">
+                    <div class="property-title-label">{{ key }}</div>
+                    <div class="property-value-text {% if val == 'Not Available' %}missing-cell{% endif %}">
+                        {{ val }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="right-summary-card">
+            <div class="summary-header-banner">Summary</div>
+            <div class="summary-body-narrative {% if right_summary == 'Not Available' %}missing-cell{% endif %}">{{ right_summary }}</div>
+        </div>
+
+        <div class="pdf-viewer-card">
+            <div class="summary-header-banner" style="margin: 20px 20px 0 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">Source Document Archive</div>
+            {% if pdf_url %}
+                <iframe class="pdf-frame-element" src="{{ pdf_url }}"></iframe>
+            {% else %}
+                <div style="padding: 40px; text-align: center; color: #94a3b8; font-style: italic; font-size: 13px; margin: auto;">
+                    Physical local PDF workbook asset could not be discovered inside the database folder.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

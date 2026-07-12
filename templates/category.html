@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {% if cards %}
+        <div class="card-grid">
+            {% for card_title in cards %}
+                <a href="/{{ category_folder }}?card={{ card_title }}" class="card-link">
+                    <div class="feature-card {% if selected_card == card_title %}active-card{% endif %}">
+                        <h3>{{ card_title }}</h3>
+                        <p>Extract core identities, track credentials, and run validation ledgers for {{ card_title }}.</p>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state"><p>No system subdirectories found inside this category node.</p></div>
+    {% endif %}
+
+    {% if selected_card %}
+        <div class="workspace-panel">
+            <div style="margin-bottom: 16px;">
+                <h3 style="color: #0f172a;">{{ selected_card }} Master Record Registry</h3>
+                <p style="margin-top: 4px; color: #64748b; font-size: 13px;">
+                    Displaying live data entries parsed safely from <code>{{ selected_card }}.xlsx</code> (Filtered by unique Member ID)
+                </p>
+            </div>
+
+            <!-- Insert this inside templates/category.html right above the <div class="filter-container"> -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="color: #0f172a;">{{ selected_card }} Master Record Registry</h3>
+                <a href="/upload/workspace" class="btn-view" style="background-color: #2563eb; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-weight: 500;">
+                    ➕ Upload Document
+                </a>
+            </div>
+            
+            <div class="filter-container">
+                <input type="text" id="tableSearch" class="search-input" placeholder="Type to filter ledger rows..." onkeyup="filterTable()">
+            </div>
+
+
+            {% if excel_rows %}
+                <div class="table-responsive">
+                    <table class="data-table" id="dataTable">
+                        <thead>
+                            <tr>
+                                {% for header in excel_headers %}
+                                    <th>{{ header }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in excel_rows %}
+                                <tr>
+                                    {% for cell in row[:-1] %}
+                                        <td class="{% if cell == 'Not Available' %}missing-cell{% endif %}">
+                                            {{ cell }}
+                                        </td>
+                                    {% endfor %}
+                                    <td>
+                                        <a href="/{{ category_folder }}/{{ selected_card }}/{{ row[-1] }}" class="btn-view">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state"><p style="color: #dc2626;">No operational spreadsheet logs found.</p></div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <script>
+        function filterTable() {
+            const input = document.getElementById("tableSearch");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("dataTable");
+            if (!table) return;
+            const tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let rowMatches = false;
+                const td = tr[i].getElementsByTagName("td");
+                for (let j = 0; j < td.length - 1; j++) {
+                    if (td[j]) {
+                        const txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                            rowMatches = true;
+                            break;
+                        }
+                    }
+                }
+                tr[i].style.display = rowMatches ? "" : "none";
+            }
+        }
+    </script>
+{% endblock %}
