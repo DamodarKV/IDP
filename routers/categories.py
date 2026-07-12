@@ -3,13 +3,14 @@ from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from routers.core import get_navigation_structure
+import requests
+import json
+
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
 BASE_DIR = "database"
 
-import requests
-import json
 
 def fetch_documents():
     url = "https://7frs8tj63h.execute-api.us-east-1.amazonaws.com/dev/idpv3-fetch?type=all"

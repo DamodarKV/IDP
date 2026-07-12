@@ -143,7 +143,7 @@ async def upload_workspace(request: Request, file_path: str = None):
         context={
             "request": request,
             "menu": menu_structure,
-            "current_page": "Upload Analysis Workbench",
+            "current_page": "Upload Documents",
             "view_type": "upload_view",
             "preview_url": file_path,
             "extraction_keys": extraction_keys
