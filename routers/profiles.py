@@ -67,7 +67,7 @@ async def view_invoice_details(request: Request, category: str, subfolder: str, 
         "Member ID": mock_meta.get("ID", "Not Available")
     }
 
-    right_summary = profile_data.get("summary", "Not Available")
+    right_summary = "Summary Not Available"
     pdf_static_route = profile_data.get("file_name", "")
 
     return templates.TemplateResponse(
