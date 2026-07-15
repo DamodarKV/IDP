@@ -51,6 +51,7 @@ async def read_category(request: Request, category: str, card: str = None):
         for doc in injected_documents:
             cleaned_rows.append([
                 doc["patient_name"],
+                doc["language"],
                 doc["id"],
                 doc["date"],
                 doc["id"]  # The final element used for the 'View' action link

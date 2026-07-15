@@ -38,7 +38,7 @@ EDITABLE_METADATA_FIELDS = [
     "Address", "City", "State", "Zip code", "Contact number",
     "Insurance carrier", "Insurance plan", "Policy number", "Group number",
     "Blood type", "Known medical conditions", "Relationship",
-    "Ingested Date", "Last updated date"
+    "Ingested Date", "Last updated date","Language"
 ]
 
 
@@ -64,6 +64,7 @@ async def view_invoice_details(request: Request, category: str, subfolder: str, 
         "Patient DOB": mock_meta.get("Date of birth", "Not Available"),
         "Patient MRN": mock_meta.get("Patient identifier", "Not Available"),
         "Ingested Date": mock_meta.get("Ingested Date", "Not Available"),
+        "Language": mock_meta.get("Language","Not Available"),
         "Member ID": mock_meta.get("ID", "Not Available")
     }
 
