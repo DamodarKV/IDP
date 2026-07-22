@@ -47,7 +47,7 @@ def raw_process(payload):
 
 def fetch_keys(file_name):
 
-
+    print("Hi")
     url = f"https://7frs8tj63h.execute-api.us-east-1.amazonaws.com/dev/idpv3-fetch-keys?filename={file_name}"
 
     payload = {}
