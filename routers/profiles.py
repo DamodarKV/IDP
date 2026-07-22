@@ -20,6 +20,7 @@ def fetch_document(id):
     return patient_data
 
 def update_document(payload):
+    print(payload)
     url = "https://7frs8tj63h.execute-api.us-east-1.amazonaws.com/dev/idpv3-update-file"
     # Optional: Add headers if your API requires them
     headers = {
