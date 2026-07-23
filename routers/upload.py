@@ -31,7 +31,7 @@ UPLOAD_API_ROOT = "https://7frs8tj63h.execute-api.us-east-1.amazonaws.com/dev"
 UPLOAD_BUCKET_NAME = "idpv3.0-pdf-trigger"
 
 def raw_process(payload):
-    print(payload)
+    print(f"RawProcess:{payload}")
     url = "https://7frs8tj63h.execute-api.us-east-1.amazonaws.com/dev/idpv3-rawprocess"
 
     body = {"selected keys": payload}
